@@ -1,0 +1,21 @@
+import { NextRequest, NextResponse } from "next/server";
+import { authorizedRequest } from "@/lib/api";
+
+// Mark All as Read
+export async function PATCH(request: NextRequest) {
+  try {
+    const response = await authorizedRequest(
+      "/notifications/mark-all-as-read",
+      {
+        method: "PATCH",
+      }
+    );
+
+    return NextResponse.json(response.data);
+  } catch (error: any) {
+    return NextResponse.json(
+      { message: error.message || "Failed to mark all notifications as read" },
+      { status: error.response?.status || 500 }
+    );
+  }
+}
